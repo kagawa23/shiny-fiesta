@@ -2,69 +2,51 @@ import 'package:flutter/material.dart';
 
 void main(){
   runApp(new MaterialApp(
-    home: new MyApp(),
-    theme: new ThemeData(primarySwatch: Colors.green),
+      home: new MyButton(),
   ));
 }
 
-
-class MyApp extends StatelessWidget {
+class MyButton extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    final double myTextSize = 30.0;
-    final double myIconSize = 40.0;
-    final TextStyle myTextStyle =
-        new TextStyle(color: Colors.grey,fontSize: myTextSize);
-    var column = new Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        new MyCard(
-          title: new Text("Favorite", style: myTextStyle),
-          icon: new Icon(Icons.favorite, size: myIconSize, color: Colors.blue)
-        ),
-        new MyCard(
-            title: new Text("Alarm", style: myTextStyle),
-            icon: new Icon(Icons.alarm, size: myIconSize, color: Colors.blue)
-        ),
-        new MyCard(
-            title: new Text("Airport Shuttle", style: myTextStyle),
-            icon: new Icon(Icons.airport_shuttle, size: myIconSize, color: Colors.amber)
-        ),
-        new MyCard(
-            title: new Text("Done", style: myTextStyle),
-            icon: new Icon(Icons.done, size: myIconSize, color: Colors.green)
-        ),
-      ]
-    );
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Stateless Widget"),
-      ),
-      body: new Container(
-        padding: const EdgeInsets.only(bottom:20.0),
-        child: new Center(
-          child: new SingleChildScrollView(child: column)
-        )
-      )
-    );
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return new MyButtonState();
   }
 }
 
-
-class MyCard extends StatelessWidget {
-  final Widget icon;
-  final Widget title;
-  MyCard({this.title,this.icon});
+class MyButtonState extends State<MyButton> {
+  int counter = 0;
+  List<String> strings = ['Flutter','is','cool','and','awesome!'];
+  String displayedString = 'Hello World!!';
+  void onPressOfButton() {
+    setState(() {
+      displayedString = strings[counter];
+      counter = counter < 3? counter + 1:0;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    
-    return new Container(
-      margin: const EdgeInsets.only(bottom:10.0),
-      child: new Card(
-        child: new Container(
-          padding: const EdgeInsets.all(20.0),
+    // TODO: implement build
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("State Widget"),
+        backgroundColor: Colors.green,
+      ),
+      body: new Container(
+        child: new Center(
           child: new Column(
-            children: <Widget>[this.title, this.icon],
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Text(displayedString, style: new TextStyle(fontSize: 40.0)),
+              new Padding(padding: new EdgeInsets.all(10.0)),
+              new RaisedButton(
+              child: new Text(
+                "Press me",
+                style: new TextStyle(color: Colors.white)
+              ),
+              color: Colors.red,
+              onPressed: onPressOfButton)
+            ],
           )
         )
       )
